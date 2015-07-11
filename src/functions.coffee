@@ -1,12 +1,11 @@
-exports.help = [
-		cmd: "meizhi"
-		args: "[source]"
-		des: "A random picture of girls ('meizhi' in Chinese). Available [source]: gank (gank.io), meizitu (meizitu.com)"
-]
+exports.setup = (telegram, store) ->
+	meizhi = require './meizhi'
 
-meizhi = require './meizhi'
-
-exports.setup = (telegram, server, store) ->
-	# -1: unspecified number of parameters
-	server.route 'meizhi', -1, meizhi.setup telegram, store
+	[
+			cmd: "meizhi"
+			args: "[source]"
+			num: -1
+			desc: "A random picture of girls ('meizhi' in Chinese). Available [source]: gank (gank.io), meizitu (meizitu.com)"
+			act: meizhi.setup telegram, store
+	]
 
