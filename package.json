@@ -4,7 +4,7 @@
 	"author": "PeterCxy",
 	"description": "Picture module for telegram-bot-coffee",
 	"license": "GPL-3.0.0",
-	"homepage": "https://github.com/PeterCxy/telegram-bot-picture",
+	"homepage": "https://github.com/PeterCxy/telegram-bot-pictures",
 	"dependencies": {
 		"telegram-bot-coffee": ">=1.0.0",
 		"request": ">=2.45.0"
