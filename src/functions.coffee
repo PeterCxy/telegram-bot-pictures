@@ -1,3 +1,6 @@
+exports.name = 'pictures'
+exports.desc = 'Just picture fetcher'
+
 exports.setup = (telegram, store) ->
 	meizhi = require './meizhi'
 
