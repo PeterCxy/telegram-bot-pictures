@@ -48,7 +48,7 @@ exports.setup = (telegram, store) ->
 		stream = request url
 		telegram.sendPhoto msg.chat.id, stream if stream
 
-	(msg, args) ->
+	(msg, source) ->
 		doHandle = (msg, src) =>
 			handler = switch src
 				when 'gank' then gank
@@ -57,14 +57,12 @@ exports.setup = (telegram, store) ->
 
 			handler msg
 	
-		if args.length == 1
-			doHandle msg, args[0]
-		else if args.length == 0
+		if source?
+			doHandle msg, source
+		else
 			getLast msg.chat.id, (err, data) =>
 				console.log data
 				if err or !data? or data.trim() == ''
 					doHandle msg, 'gank'
 				else
 					doHandle msg, data
-		else
-			unrecognized msg

@@ -3,8 +3,8 @@ exports.setup = (telegram, store) ->
 
 	[
 			cmd: "meizhi"
-			args: "[source]"
-			num: -1
+			num: 1
+			opt: 1
 			desc: "A random picture of girls ('meizhi' in Chinese). Available [source]: gank (gank.io), meizitu (meizitu.com)"
 			act: meizhi.setup telegram, store
 	]
