@@ -25,6 +25,7 @@ exports.setup = (telegram, store) ->
 		if num < 10 then '0' + num else num
 
 	gank = (msg) ->
+		telegram.sendChatAction msg.chat.id, 'upload_photo'
 		setLast msg.chat.id, 'gank'
 		[year, month, day] = randomDate 2015, 5
 		url = "http://gank.io/#{year}/#{addZero month}/#{addZero day}"
@@ -41,6 +42,7 @@ exports.setup = (telegram, store) ->
 					telegram.sendMessage msg.chat.id, ':P'
 				
 	meizitu = (msg) ->
+		telegram.sendChatAction msg.chat.id, 'upload_photo'
 		setLast msg.chat.id, 'meizitu'
 		[year, month, day] = randomDate 2014, 1
 		url = "http://pic.meizitu.com/wp-content/uploads/#{year}a/#{addZero month}/#{addZero day}/#{addZero Math.floor(Math.random() * 8) + 1}.jpg"
