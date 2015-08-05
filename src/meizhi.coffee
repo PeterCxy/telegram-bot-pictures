@@ -1,5 +1,6 @@
 # Meizhi - Chinese of 'girls'
 request = require 'request'
+{korubaku} = require 'korubaku'
 
 exports.setup = (telegram, store) ->
 
@@ -25,12 +26,13 @@ exports.setup = (telegram, store) ->
 		if num < 10 then '0' + num else num
 
 	gank = (msg) ->
-		telegram.sendChatAction msg.chat.id, 'upload_photo'
-		setLast msg.chat.id, 'gank'
-		[year, month, day] = randomDate 2015, 5
-		url = "http://gank.io/#{year}/#{addZero month}/#{addZero day}"
-		console.log url
-		request.get url, (error, response, body) =>
+		korubaku (ko) =>
+			yield telegram.sendChatAction msg.chat.id, 'upload_photo', ko.default()
+			setLast msg.chat.id, 'gank'
+			[year, month, day] = randomDate 2015, 5
+			url = "http://gank.io/#{year}/#{addZero month}/#{addZero day}"
+			console.log url
+			[error, response, body] = yield request.get url, ko.raw()
 			if !error
 				regex = ///
 					<img[^>]+src="([^">]+)"
@@ -42,13 +44,14 @@ exports.setup = (telegram, store) ->
 					telegram.sendMessage msg.chat.id, ':P'
 				
 	meizitu = (msg) ->
-		telegram.sendChatAction msg.chat.id, 'upload_photo'
-		setLast msg.chat.id, 'meizitu'
-		[year, month, day] = randomDate 2014, 1
-		url = "http://pic.meizitu.com/wp-content/uploads/#{year}a/#{addZero month}/#{addZero day}/#{addZero Math.floor(Math.random() * 8) + 1}.jpg"
-		console.log url
-		stream = request url
-		telegram.sendPhoto msg.chat.id, stream if stream
+		korubaku (ko) ->
+			yield telegram.sendChatAction msg.chat.id, 'upload_photo', ko.raw()
+			setLast msg.chat.id, 'meizitu'
+			[year, month, day] = randomDate 2014, 1
+			url = "http://pic.meizitu.com/wp-content/uploads/#{year}a/#{addZero month}/#{addZero day}/#{addZero Math.floor(Math.random() * 8) + 1}.jpg"
+			console.log url
+			stream = request url
+			telegram.sendPhoto msg.chat.id, stream if stream
 
 	(msg, source) ->
 		doHandle = (msg, src) =>
