@@ -29,19 +29,19 @@ exports.setup = (telegram, store) ->
 		korubaku (ko) =>
 			yield telegram.sendChatAction msg.chat.id, 'upload_photo', ko.default()
 			setLast msg.chat.id, 'gank'
-			[year, month, day] = randomDate 2015, 5
-			url = "http://gank.io/#{year}/#{addZero month}/#{addZero day}"
-			console.log url
-			[error, response, body] = yield request.get url, ko.raw()
-			if !error
-				regex = ///
-					<img[^>]+src="([^">]+)"
-				///
-				url = (body.match regex)[1]
-				if url? and url.startsWith 'http'
-					telegram.sendPhoto msg.chat.id, (request url)
-				else
-					telegram.sendMessage msg.chat.id, ':P'
+			url = 'http://gank.avosapps.com/api/random/data/%E7%A6%8F%E5%88%A9/1'
+			[error, _, body] = yield request.get url, ko.raw()
+			console.log body
+			if !error?
+				data = JSON.parse body
+				if !data.error
+					[[result]] = data.results
+					url = result.url
+					console.log url
+					if url? and url.startsWith 'http'
+						telegram.sendPhoto msg.chat.id, (request url)
+					else
+						telegram.sendMessage msg.chat.id, ':P'
 				
 	meizitu = (msg) ->
 		korubaku (ko) ->
