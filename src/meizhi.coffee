@@ -35,7 +35,8 @@ exports.setup = (telegram, store) ->
 			if !error?
 				data = JSON.parse body
 				if !data.error
-					[[result]] = data.results
+					console.log data.results
+					[result] = data.results
 					url = result.url
 					console.log url
 					if url? and url.startsWith 'http'
