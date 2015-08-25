@@ -43,7 +43,7 @@ exports.setup = (telegram, store) ->
 						telegram.sendPhoto msg.chat.id, (request url)
 					else
 						telegram.sendMessage msg.chat.id, ':P'
-				
+
 	meizitu = (msg) ->
 		korubaku (ko) ->
 			yield telegram.sendChatAction msg.chat.id, 'upload_photo', ko.raw()
@@ -62,7 +62,7 @@ exports.setup = (telegram, store) ->
 				else unrecognized
 
 			handler msg
-	
+
 		if source?
 			doHandle msg, source
 		else
