@@ -4,6 +4,10 @@ request = require 'request'
 
 exports.setup = (telegram) ->
 	(msg, query) ->
+		if msg.chat.title? and msg.chat.title.indexOf('NSFW') < 0
+			telegram.sendMessage msg.chat.id, 'This command may be NSFW. Do not use it in SFW groups.'
+			return
+
 		korubaku (ko) =>
 			yield telegram.sendChatAction msg.chat.id, 'upload_photo', ko.raw()
 			opts =
